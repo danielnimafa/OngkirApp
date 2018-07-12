@@ -5,6 +5,7 @@ import com.danielnimafa.android.appongkir.model.response.Cost.CostModel
 import com.danielnimafa.android.appongkir.model.response.Province.ProvinceModel
 import com.danielnimafa.android.appongkir.utils.Const
 import io.reactivex.Observable
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -19,10 +20,10 @@ interface ServiceApi {
     fun cityData(): Observable<Response<CitiesModel>>
 
     @POST(Const.cost)
-    fun costData(@Part("origin") originID: String,
-                 @Part("destination") destination: String,
-                 @Part("weight") weight: Int,
-                 @Part("courier") courier: String): Observable<Response<CostModel>>
+    fun costData(@Part("origin") originID: RequestBody,
+                 @Part("destination") destination: RequestBody,
+                 @Part("weight") weight: RequestBody,
+                 @Part("courier") courier: RequestBody): Observable<Response<CostModel>>
 
     /*@Multipart
     @POST("api/login")

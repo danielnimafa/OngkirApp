@@ -79,6 +79,7 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
     }
 
     override fun showMessageScreen(message: String, showReloadButton: Boolean) {
+        messageInfoTx.visibility = View.VISIBLE
         messageInfoTx.text = message
         reloadBtn.visibility = if (showReloadButton) View.VISIBLE else View.GONE
     }
@@ -88,6 +89,13 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         reloadBtn.visibility = View.GONE
         messageInfoTx.visibility = View.GONE
         showTarifLayout(false)
+    }
+
+    override fun restoreDefaultInputState() {
+        edOrigin.setText("")
+        edDestination.setText("")
+        edWeight.setText("")
+        radio_jne.isChecked = true
     }
 
     override fun tos(message: String) = toast(message)
@@ -109,12 +117,13 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
 
         showTarifLayout(false)
 
-        originLayout.click { }
-        destinationaLayout.click { }
-        originClearBtn.click { edOrigin.setText(""); presenter.assignOriginCity("") }
-        destinationClearBtn.click { edDestination.setText(""); presenter.assignDestinationCity("") }
+        originBtn.click { }
+        destinationBtn.click { }
+//        originClearBtn.click { edOrigin.setText(""); presenter.assignOriginCity("") }
+//        destinationClearBtn.click { edDestination.setText(""); presenter.assignDestinationCity("") }
         reloadBtn.click { loadSourceData() }
         checkBtn.click { presenter.validateInput() }
+        resetInputBtn.click { presenter.resetInputAction() }
         radio_jne.click { selectCourier(it) }
         radio_tiki.click { selectCourier(it) }
         radio_pos.click { selectCourier(it) }

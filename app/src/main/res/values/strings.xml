@@ -19,4 +19,5 @@
     <string name="str_gram">gram</string>
     <string name="message_fill_input_data">Lengkapi data terlebih dahulu</string>
     <string name="str_wait">Silakan tunggu</string>
+    <string name="str_reset">Reset Input</string>
 </resources>

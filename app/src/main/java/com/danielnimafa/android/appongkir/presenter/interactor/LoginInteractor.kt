@@ -30,9 +30,9 @@ class LoginInteractor {
     }
 
     fun submittingLogin(deviceID: String, username: String, password: String, listener: OnFinishedLoginListener) {
-        subs.add(ClientRequest.loginRequest("deviceId", "username", "password",
+        /*subs.add(ClientRequest.loginRequest("deviceId", "username", "password",
                 success = { listener.onSuccessLogin(it) },
                 fail = { listener.onFailedLogin(it) },
-                error = { listener.onErrorLogin(it) }))
+                error = { listener.onErrorLogin(it) }))*/
     }
 }

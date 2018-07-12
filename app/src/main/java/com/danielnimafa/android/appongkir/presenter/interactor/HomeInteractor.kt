@@ -4,6 +4,7 @@ import com.danielnimafa.android.appongkir.model.content.CityContent
 import com.danielnimafa.android.appongkir.model.content.ProvinceContent
 import com.danielnimafa.android.appongkir.utils.Const
 import com.danielnimafa.android.appongkir.utils.Sout
+import com.danielnimafa.android.appongkir.utils.extension.createRequestBody
 import com.danielnimafa.android.appongkir.utils.networking.ServiceGenerator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -101,15 +102,23 @@ class HomeInteractor {
     }
 
     fun clearExistingSourceData() {
-        realm.apply {
-            where(ProvinceContent::class.java).findAll().apply { deleteAll() }
-            where(CityContent::class.java).findAll().apply { deleteAll() }
+        realm.executeTransaction {
+            it.run {
+                where(ProvinceContent::class.java).findAll().apply { deleteAll() }
+                where(CityContent::class.java).findAll().apply { deleteAll() }
+            }
         }
     }
 
     fun submitTarifData(courier: String, originID: String, destinationID: String, weightValue: Int, l: OnFinishedCheckTerifListener) {
+
+        val courierRb = createRequestBody(Const.multipartFormdata, courier)
+        val originRb = createRequestBody(Const.multipartFormdata, originID)
+        val destinationRb = createRequestBody(Const.multipartFormdata, destinationID)
+        val weightRb = createRequestBody(Const.multipartFormdata, "$weightValue")
+
         subs.add(ServiceGenerator.createService(Const.api_key)
-                .costData(originID, destinationID, weightValue, courier)
+                .costData(originRb, destinationRb, weightRb, courierRb)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

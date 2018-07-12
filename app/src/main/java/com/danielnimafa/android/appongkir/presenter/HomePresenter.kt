@@ -5,6 +5,7 @@ import com.danielnimafa.android.appongkir.R
 import com.danielnimafa.android.appongkir.model.response.Cost.Rajaongkir
 import com.danielnimafa.android.appongkir.model.response.ErrorBody.ErrorBodyModel
 import com.danielnimafa.android.appongkir.presenter.interactor.HomeInteractor
+import com.danielnimafa.android.appongkir.utils.Sout
 import com.danielnimafa.android.appongkir.utils.extension.getNetworkingError
 import com.danielnimafa.android.appongkir.utils.extension.stringGet
 import com.danielnimafa.android.appongkir.view.iface.HomeView
@@ -69,10 +70,17 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
 
     fun assignOriginCity(cityId: String) {
         originID = cityId
+        Sout.log("city origin", "$originID")
     }
 
     fun assignDestinationCity(cityId: String) {
         destinationID = cityId
+        Sout.log("city dest", "$destinationID")
+    }
+
+    fun assignCourerValue(type: String) {
+        courierValue = type
+        Sout.log("courier", "$courierValue")
     }
 
     override fun onSuccessProvince(rajaongkir: provinceData?) {
@@ -158,7 +166,12 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
         }
     }
 
-    fun assignCourerValue(type: String) {
-        courierValue = type
+    fun resetInputAction() {
+        assignCourerValue("")
+        assignDestinationCity("")
+        assignOriginCity("")
+        weightValue = 0
+        courierValue = ""
+        view?.run { restoreDefaultInputState() }
     }
 }
