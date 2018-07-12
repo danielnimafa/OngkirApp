@@ -23,7 +23,7 @@ class CitiesAdapter(val datasrc: ArrayList<CityContentModel>,
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.run {
             datasrc[position].also { t ->
-                txCity.text = t.city_name
+                txCity.text = "${t.city_name} ${t.type}"
                 txType.text = t.type
                 itemView.click { itemTap(t) }
             }

@@ -18,12 +18,14 @@ class RegionActivity : AppCompatActivity(), RegionScreenListener {
     }
 
     lateinit var fm: FragmentManager
+    lateinit var cityType: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Sout.thisContext(this::class.java)
         setContentView(R.layout.activity_region_layout)
         setupView()
+        intent.extras?.run { cityType = getString("type") }
     }
 
     override fun onBackPressed() {
@@ -38,6 +40,10 @@ class RegionActivity : AppCompatActivity(), RegionScreenListener {
     override fun setupSubtitleScreen(subtitle: String) {
         supportActionBar?.subtitle = subtitle
     }
+
+    override fun grabCityType(): String = cityType
+
+    override fun closeActivity() = finish()
 
     override fun gotoCityScreen(t: ProvinceContentModel) {
         fm.beginTransaction()

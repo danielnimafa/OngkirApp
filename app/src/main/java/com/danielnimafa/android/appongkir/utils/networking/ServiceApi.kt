@@ -8,6 +8,7 @@ import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 
@@ -19,6 +20,7 @@ interface ServiceApi {
     @GET(Const.city)
     fun cityData(): Observable<Response<CitiesModel>>
 
+    @Multipart
     @POST(Const.cost)
     fun costData(@Part("origin") originID: RequestBody,
                  @Part("destination") destination: RequestBody,

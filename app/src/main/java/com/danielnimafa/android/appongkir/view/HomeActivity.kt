@@ -6,14 +6,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import com.danielnimafa.android.appongkir.R
+import com.danielnimafa.android.appongkir.model.event.DestinationCityEvent
 import com.danielnimafa.android.appongkir.model.event.OriginCityEvent
 import com.danielnimafa.android.appongkir.presenter.HomePresenter
 import com.danielnimafa.android.appongkir.presenter.interactor.HomeInteractor
 import com.danielnimafa.android.appongkir.utils.Sout
-import com.danielnimafa.android.appongkir.utils.extension.click
-import com.danielnimafa.android.appongkir.utils.extension.postDelayed
-import com.danielnimafa.android.appongkir.utils.extension.showAlertSingleActionMessage
-import com.danielnimafa.android.appongkir.utils.extension.stringGet
+import com.danielnimafa.android.appongkir.utils.extension.*
 import com.danielnimafa.android.appongkir.view.iface.HomeView
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import com.hwangjr.rxbus.RxBus
@@ -115,11 +113,11 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         showTarifLayout(false)
     }
 
-    override fun restoreDefaultInputState() {
+    override fun resetInputValue() {
         edOrigin.setText("")
         edDestination.setText("")
-        edWeight.setText("")
-        radio_jne.isChecked = true
+        edWeight.setText("0")
+        radio_jne.performClick()
     }
 
     override fun tos(message: String) = toast(message)
@@ -141,20 +139,27 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
 
         showTarifLayout(false)
 
-        originBtn.click { gotoRegionScreen() }
-        destinationBtn.click { gotoRegionScreen() }
+        originBtn.click { gotoRegionScreen("origin") }
+        destinationBtn.click { gotoRegionScreen("destination") }
 //        originClearBtn.click { edOrigin.setText(""); presenter.assignOriginCity("") }
 //        destinationClearBtn.click { edDestination.setText(""); presenter.assignDestinationCity("") }
+        edWeight.apply {
+            onTextChanged { presenter.assignWeightValue(it) }
+            setText("0")
+        }
         reloadBtn.click { loadSourceData() }
         checkBtn.click { presenter.validateInput() }
         resetInputBtn.click { presenter.resetInputAction() }
-        radio_jne.click { selectCourier(it) }
         radio_tiki.click { selectCourier(it) }
         radio_pos.click { selectCourier(it) }
+        radio_jne.apply {
+            click { selectCourier(it) }
+            performClick()
+        }
     }
 
-    private fun gotoRegionScreen() {
-        startActivity(RegionActivity[this])
+    private fun gotoRegionScreen(type: String) {
+        startActivity(RegionActivity[this].apply { putExtra("type", type) })
     }
 
     private fun selectCourier(it: View) {
@@ -175,14 +180,16 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
 
     @Subscribe
     fun selectedOriginCity(t: OriginCityEvent) {
-        Sout.log("selected City", "${t.cityName}, ${t.cityId}")
+        Sout.log("selected origin City", "${t.cityName}, ${t.cityId}")
         presenter.assignOriginCity(t.cityId)
+        edOrigin.setText(t.cityName)
     }
 
     @Subscribe
-    fun selectedDestinationCity(t: OriginCityEvent) {
-        Sout.log("selected City", "${t.cityName}, ${t.cityId}")
+    fun selectedDestinationCity(t: DestinationCityEvent) {
+        Sout.log("selected destination City", "${t.cityName}, ${t.cityId}")
         presenter.assignDestinationCity(t.cityId)
+        edDestination.setText(t.cityName)
     }
 
 }

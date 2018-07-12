@@ -6,4 +6,6 @@ interface RegionScreenListener {
     fun setupTitleScreen(title: String)
     fun gotoCityScreen(t: ProvinceContentModel)
     fun setupSubtitleScreen(subtitle: String)
+    fun grabCityType(): String
+    fun closeActivity()
 }
