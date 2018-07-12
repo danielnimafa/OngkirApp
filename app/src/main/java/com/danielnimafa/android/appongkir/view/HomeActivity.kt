@@ -28,8 +28,9 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         super.onCreate(savedInstanceState)
         Sout.thisContext(this::class.java)
         setContentView(R.layout.activity_home)
-        presenter.onCreate()
+        presenter.onCreate(this)
         setupView()
+        loadSourceData()
     }
 
     override fun onDestroy() {
@@ -47,6 +48,10 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         backState = true
         toast("Tekan sekali lagi untuk keluar")
         postDelayed(2000) { backState = false }
+    }
+
+    private fun loadSourceData() {
+        presenter.loadSourceData()
     }
 
     private fun setupView() {

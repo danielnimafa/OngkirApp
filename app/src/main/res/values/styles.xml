@@ -67,4 +67,39 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <style name="TeksDisplay4">
+        <item name="android:fontFamily">@string/font_fontFamily_light</item>
+        <item name="android:textSize">112sp</item>
+    </style>
+
+    <style name="TeksDisplay3">
+        <item name="android:fontFamily">@string/font_fontFamily_regular</item>
+        <item name="android:textSize">56sp</item>
+    </style>
+
+    <style name="TeksDisplay2">
+        <item name="android:fontFamily">@string/font_fontFamily_regular</item>
+        <item name="android:textSize">45sp</item>
+    </style>
+
+    <style name="TeksDisplay1">
+        <item name="android:fontFamily">@string/font_fontFamily_regular</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="TeksTitle">
+        <item name="android:fontFamily">@string/font_fontFamily_medium</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="TeksSubHead">
+        <item name="android:fontFamily">@string/font_fontFamily_regular</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="TeksCaption">
+        <item name="android:fontFamily">@string/font_fontFamily_regular</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
 </resources>

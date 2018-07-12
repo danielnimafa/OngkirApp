@@ -16,10 +16,10 @@ import java.util.concurrent.TimeUnit
 
 object ServiceGenerator {
 
-    fun createService(deviceID: String, auth: String): ServiceApi {
-        val token = "Bearer $auth"
+    fun createService(auth: String): ServiceApi {
+        /*val token = "Bearer $auth"*/
         val builder = Retrofit.Builder()
-                .baseUrl(PrefHelper.loadBaseURL())
+                .baseUrl(Const.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
 
@@ -28,48 +28,15 @@ object ServiceGenerator {
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .cache(null)
-        deviceID?.also {
-            httpClient.addInterceptor { chain ->
-                var original: Request = chain.request()
-                var requestBuilder = original.newBuilder()
-                        .header(Const.header_auth, token)
-                        .header(Const.header_appkey, Const.value_header_appkey)
-                        .header(Const.header_appsecret, Const.value_header_appsecret)
-                        .header(Const.header_deviceID, it)
-                        .method(original.method(), original.body())
-                var request = requestBuilder.build()
-                chain.proceed(request)
-            }
-        }
-        if (PrefHelper.getDevMode() == 1) addLoggingInterceptor(httpClient)
-        val retrofit = builder.client(httpClient.build()).build()
-        return retrofit.create(ServiceApi::class.java)
-    }
+                .addInterceptor { chain ->
+                    val original: Request = chain.request()
+                    val requestBuilder = original.newBuilder()
+                            .header(Const.header_appkey, auth)
+                            .method(original.method(), original.body())
+                    val request = requestBuilder.build()
+                    chain.proceed(request)
+                }
 
-    fun createService(deviceID: String): ServiceApi {
-
-        val builder = Retrofit.Builder()
-                .baseUrl(PrefHelper.loadBaseURL())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-
-        val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .cache(null)
-        deviceID?.also {
-            httpClient.addInterceptor { chain ->
-                var original: Request = chain.request()
-                var requestBuilder = original.newBuilder()
-                        .header(Const.header_appkey, Const.value_header_appkey)
-                        .header(Const.header_appsecret, Const.value_header_appsecret)
-                        .header(Const.header_deviceID, it)
-                        .method(original.method(), original.body())
-                var request = requestBuilder.build()
-                chain.proceed(request)
-            }
-        }
         if (PrefHelper.getDevMode() == 1) addLoggingInterceptor(httpClient)
         val retrofit = builder.client(httpClient.build()).build()
         return retrofit.create(ServiceApi::class.java)
@@ -84,7 +51,7 @@ object ServiceGenerator {
                 .cache(null)
 
         val builder = Retrofit.Builder()
-                .baseUrl("URL")
+                .baseUrl(Const.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
 

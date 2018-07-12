@@ -14,4 +14,5 @@
     <string name="kota_asal">Kota Asal</string>
     <string name="kota_tujuan">Kota Tujuan</string>
     <string name="str_cek_tarif">Cek Tarif</string>
+    <string name="str_reload">Muat Ulang</string>
 </resources>

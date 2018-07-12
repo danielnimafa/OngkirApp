@@ -1,6 +1,5 @@
 package com.danielnimafa.android.appongkir.presenter.interactor
 
-import com.danielnimafa.android.appongkir.utils.networking.ClientRequest
 import io.reactivex.disposables.CompositeDisposable
 import io.realm.Realm
 import okhttp3.ResponseBody

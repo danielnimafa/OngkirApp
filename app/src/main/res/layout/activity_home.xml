@@ -6,40 +6,50 @@
     android:background="@color/white"
     tools:context=".view.LoginActivity">
 
-    <LinearLayout
-        android:id="@+id/contentLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_layout"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_layout">
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/originTx"
+        <LinearLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/kota_asal" />
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp">
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/destinationTx"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="@string/kota_tujuan" />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/originTx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/kota_asal" />
 
-        <Button
-            android:id="@+id/checkBtn"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/str_cek_tarif" />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/destinationTx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/kota_tujuan" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/checkBtn"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/str_cek_tarif" />
+
+        </LinearLayout>
+
+        <include layout="@layout/circle_progress_layout" />
+
+        <include layout="@layout/message_info_layout" />
+
+    </RelativeLayout>
 
     <include layout="@layout/toolbar" />
 
