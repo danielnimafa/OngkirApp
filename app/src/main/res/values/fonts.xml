@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="font_fontFamily_regular">sans-serif</string>
+    <string name="font_fontFamily_medium">sans-serif-medium</string>
+    <string name="font_fontFamily_light">sans-serif-light</string>
+    <string name="font_fontFamily_condensed">sans-serif-condensed</string>
+    <string name="font_fontFamily_black">sans-serif-black</string>
+    <string name="font_fontFamily_this">sans-serif-thin</string>
+</resources>

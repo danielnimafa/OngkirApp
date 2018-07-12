@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Ongkir App</string>
+    <string name="str_username">Username</string>
+    <string name="str_password">Password</string>
+    <string name="str_login">Login</string>
+    <string name="server_error_msg">Error Server</string>
+    <string name="server_lost_conn">Can\'t connect to Server</string>
+    <string name="inet_check_msg">Please check your internet connection and try again</string>
+    <string name="message_timeout">Connection timeout, please try again</string>
+    <string name="message_server_lost_conn">Failed to establish connection to server</string>
+    <string name="message_invalid_response">Invalid response</string>
+    <string name="timeout_msg">Connection timeout!</string>
+    <string name="invalid_response">Invalid Response!</string>
+    <string name="kota_asal">Kota Asal</string>
+    <string name="kota_tujuan">Kota Tujuan</string>
+    <string name="str_cek_tarif">Cek Tarif</string>
+    <string name="str_reload">Muat Ulang</string>
+    <string name="message_failed_fetching">Gagal memuat data. Silakan mencoba kembali</string>
+    <string name="str_gram">gram</string>
+    <string name="message_fill_input_data">Lengkapi data terlebih dahulu</string>
+    <string name="str_wait">Silakan tunggu</string>
+    <string name="str_reset">Reset Input</string>
+    <string name="str_gagal">Gagal</string>
+    <string name="str_region">Wilayah</string>
+    <string name="str_province">Provinsi</string>
+    <string name="str_choose_province">Pilih Provinsi</string>
+    <string name="str_choose_city">Pilih Kota</string>
+</resources>
