@@ -141,8 +141,8 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
 
         showTarifLayout(false)
 
-        originBtn.click { }
-        destinationBtn.click { }
+        originBtn.click { gotoRegionScreen() }
+        destinationBtn.click { gotoRegionScreen() }
 //        originClearBtn.click { edOrigin.setText(""); presenter.assignOriginCity("") }
 //        destinationClearBtn.click { edDestination.setText(""); presenter.assignDestinationCity("") }
         reloadBtn.click { loadSourceData() }
@@ -151,6 +151,10 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         radio_jne.click { selectCourier(it) }
         radio_tiki.click { selectCourier(it) }
         radio_pos.click { selectCourier(it) }
+    }
+
+    private fun gotoRegionScreen() {
+        startActivity(RegionActivity[this])
     }
 
     private fun selectCourier(it: View) {

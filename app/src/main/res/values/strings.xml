@@ -20,4 +20,7 @@
     <string name="message_fill_input_data">Lengkapi data terlebih dahulu</string>
     <string name="str_wait">Silakan tunggu</string>
     <string name="str_reset">Reset Input</string>
+    <string name="str_gagal">Gagal</string>
+    <string name="str_region">Wilayah</string>
+    <string name="str_province">Province</string>
 </resources>
