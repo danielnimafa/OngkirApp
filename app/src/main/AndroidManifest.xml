@@ -32,6 +32,9 @@
         <activity
             android:name=".view.TarifResultActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.RegionActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

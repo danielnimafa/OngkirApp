@@ -64,7 +64,7 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
             return
         }
 
-        view?.updateButtonMessage(activity.stringGet(R.string.str_wait))
+        view?.showProgressCost(activity.stringGet(R.string.str_wait))
         interactor.submitTarifData(courierValue, originID, destinationID, weightValue, this)
     }
 
@@ -98,8 +98,8 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
 
     override fun onSuccessCities(rajaongkir: citiesData?) {
         view?.run {
-            rajaongkir?.also { interactor.saveCitiesData(it.results) }
             hideProgress()
+            rajaongkir?.also { interactor.saveCitiesData(it.results) }
             showTarifLayout(true)
         }
     }
@@ -114,7 +114,7 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
 
     override fun onSuccessCost(t: Rajaongkir?) {
         view?.run {
-            updateButtonMessage(activity.stringGet(R.string.str_cek_tarif))
+            hideProgressCost()
             t?.also {
                 val ongkirStr = Gson().toJson(it)
                 gotoDetailScreen(ongkirStr)
@@ -124,7 +124,7 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
 
     override fun onFailCost(strFail: String?) {
         view?.run {
-            updateButtonMessage(activity.stringGet(R.string.str_cek_tarif))
+            hideProgressCost()
             val message = parseErrorBody(strFail)
             showPopupMessage("Failed", message)
         }
@@ -133,7 +133,7 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
     override fun onErrorCost(e: Exception) {
         val message = activity.getNetworkingError(e)
         view?.run {
-            updateButtonMessage(activity.stringGet(R.string.str_cek_tarif))
+            hideProgressCost()
             showPopupMessage("Failed", message)
         }
     }

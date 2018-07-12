@@ -10,4 +10,6 @@ interface HomeView : MvpView, ProgressView {
     fun showPopupMessage(title: String, message: String)
     fun gotoDetailScreen(str: String)
     fun restoreDefaultInputState()
+    fun showProgressCost(message: String)
+    fun hideProgressCost()
 }

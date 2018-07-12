@@ -84,6 +84,30 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         reloadBtn.visibility = if (showReloadButton) View.VISIBLE else View.GONE
     }
 
+    override fun showProgressCost(message: String) {
+        radio_jne.isEnabled = false
+        radio_tiki.isEnabled = false
+        radio_pos.isEnabled = false
+        edWeight.isEnabled = false
+        originBtn.isEnabled = false
+        destinationBtn.isEnabled = false
+        resetInputBtn.isEnabled = false
+        checkBtn.isEnabled = false
+        updateButtonMessage(message)
+    }
+
+    override fun hideProgressCost() {
+        radio_jne.isEnabled = true
+        radio_tiki.isEnabled = true
+        radio_pos.isEnabled = true
+        edWeight.isEnabled = true
+        originBtn.isEnabled = true
+        destinationBtn.isEnabled = true
+        resetInputBtn.isEnabled = true
+        checkBtn.isEnabled = true
+        updateButtonMessage(stringGet(R.string.str_cek_tarif))
+    }
+
     override fun showProgress() {
         circleProgress.visibility = View.VISIBLE
         reloadBtn.visibility = View.GONE
