@@ -22,5 +22,7 @@
     <string name="str_reset">Reset Input</string>
     <string name="str_gagal">Gagal</string>
     <string name="str_region">Wilayah</string>
-    <string name="str_province">Province</string>
+    <string name="str_province">Provinsi</string>
+    <string name="str_choose_province">Pilih Provinsi</string>
+    <string name="str_choose_city">Pilih Kota</string>
 </resources>

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity
 import com.danielnimafa.android.appongkir.R
 import com.danielnimafa.android.appongkir.model.content.ProvinceContentModel
 import com.danielnimafa.android.appongkir.utils.Sout
-import com.danielnimafa.android.appongkir.utils.extension.stringGet
 import com.danielnimafa.android.appongkir.view.iface.RegionScreenListener
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -36,6 +35,10 @@ class RegionActivity : AppCompatActivity(), RegionScreenListener {
         supportActionBar?.title = title
     }
 
+    override fun setupSubtitleScreen(subtitle: String) {
+        supportActionBar?.subtitle = subtitle
+    }
+
     override fun gotoCityScreen(t: ProvinceContentModel) {
         fm.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -48,7 +51,6 @@ class RegionActivity : AppCompatActivity(), RegionScreenListener {
 
         setSupportActionBar(my_toolbar)
         supportActionBar?.apply {
-            subtitle = stringGet(R.string.str_region)
             setDisplayHomeAsUpEnabled(true)
         }
 

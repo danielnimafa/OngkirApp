@@ -8,6 +8,7 @@ import com.danielnimafa.android.appongkir.model.content.ProvinceContentModel
 import com.danielnimafa.android.appongkir.presenter.ProvincePresenter
 import com.danielnimafa.android.appongkir.presenter.interactor.ProvinceInteractor
 import com.danielnimafa.android.appongkir.utils.Sout
+import com.danielnimafa.android.appongkir.utils.extension.postDelayed
 import com.danielnimafa.android.appongkir.utils.extension.stringGet
 import com.danielnimafa.android.appongkir.view.base.BaseListFragment
 import com.danielnimafa.android.appongkir.view.iface.DataListView
@@ -46,11 +47,15 @@ class ProvinceFragment : BaseListFragment<DataListView, ProvincePresenter>() {
     }
 
     private fun onItemTap(it: ProvinceContentModel) {
-        listener?.gotoCityScreen(it)
+        activity?.run {
+            postDelayed(200) { listener?.gotoCityScreen(it) }
+        }
     }
 
     private fun setupTitleScreen() {
-        val title = activity?.stringGet(R.string.str_province)
+        val title = activity?.stringGet(R.string.str_choose_province)
+        val subtitle = activity?.stringGet(R.string.str_region)
         listener?.setupTitleScreen(title ?: "-")
+        listener?.setupSubtitleScreen(subtitle ?: "-")
     }
 }
