@@ -12,4 +12,5 @@ interface HomeView : MvpView, ProgressView {
     fun resetInputValue()
     fun showProgressCost(message: String)
     fun hideProgressCost()
+    fun gotoLogin()
 }

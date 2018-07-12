@@ -25,4 +25,9 @@
     <string name="str_province">Provinsi</string>
     <string name="str_choose_province">Pilih Provinsi</string>
     <string name="str_choose_city">Pilih Kota</string>
+    <string name="str_logout">Logout</string>
+    <string name="logout_prompt">Anda akan keluar dari sistem. Lanjutkan?</string>
+    <string name="str_info">Info</string>
+    <string name="str_cancel">Batal</string>
+    <string name="str_ok">Oke</string>
 </resources>

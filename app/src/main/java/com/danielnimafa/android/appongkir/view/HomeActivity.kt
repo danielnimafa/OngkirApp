@@ -3,6 +3,8 @@ package com.danielnimafa.android.appongkir.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.RadioButton
 import com.danielnimafa.android.appongkir.R
@@ -46,6 +48,28 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         super.onDestroy()
         RxBus.get().unregister(this)
         presenter.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item!!.itemId) {
+            R.id.action_logout -> {
+                showAlertActionMessage(stringGet(R.string.logout_prompt), stringGet(R.string.str_info),
+                        { dialogInterface, which ->
+                            dialogInterface.dismiss()
+                            presenter.performLogout()
+                        }, { dialogInterface, which -> dialogInterface.dismiss() },
+                        stringGet(R.string.str_ok), stringGet(R.string.str_cancel))
+                true
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -118,6 +142,13 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         edDestination.setText("")
         edWeight.setText("0")
         radio_jne.performClick()
+    }
+
+    override fun gotoLogin() {
+        startActivity(LoginActivity[this].apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+        finish()
     }
 
     override fun tos(message: String) = toast(message)

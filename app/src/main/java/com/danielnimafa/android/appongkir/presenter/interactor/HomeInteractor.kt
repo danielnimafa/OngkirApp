@@ -2,6 +2,7 @@ package com.danielnimafa.android.appongkir.presenter.interactor
 
 import com.danielnimafa.android.appongkir.model.content.CityContent
 import com.danielnimafa.android.appongkir.model.content.ProvinceContent
+import com.danielnimafa.android.appongkir.model.content.Userdata
 import com.danielnimafa.android.appongkir.utils.Const
 import com.danielnimafa.android.appongkir.utils.Sout
 import com.danielnimafa.android.appongkir.utils.extension.createRequestBody
@@ -10,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import rx.Observable
 import com.danielnimafa.android.appongkir.model.response.Cities.Rajaongkir as citiesData
 import com.danielnimafa.android.appongkir.model.response.Cities.Result as cities
 import com.danielnimafa.android.appongkir.model.response.Cost.Rajaongkir as costData
@@ -34,6 +36,10 @@ class HomeInteractor {
         fun onSuccessCities(rajaongkir: citiesData?)
         fun onFailCities(strFail: String?)
         fun onErrorCities(e: Exception)
+    }
+
+    interface UserListener {
+        fun onSuccessLogout()
     }
 
     lateinit var subs: CompositeDisposable
@@ -128,5 +134,12 @@ class HomeInteractor {
                     Sout.trace(it as Exception)
                     l.onErrorCost(it)
                 }))
+    }
+
+    fun loggingOutUser(l: UserListener) {
+        realm.executeTransaction { r ->
+            r.where(Userdata::class.java).findAll().apply { deleteAllFromRealm() }
+        }
+        l.onSuccessLogout()
     }
 }

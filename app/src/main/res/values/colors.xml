@@ -12,6 +12,7 @@
     <color name="yellow_tab_indicator">#FFFDDF00</color>
     <color name="dim_color">#bf000000</color>
 
+    <color name="grey_inactive">#BDBFCB</color>
     <color name="green">#4CAF50</color>
     <color name="red">#d31800</color>
     <color name="greentext">#008035</color>

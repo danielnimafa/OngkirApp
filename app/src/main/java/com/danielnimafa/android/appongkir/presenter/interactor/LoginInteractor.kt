@@ -1,8 +1,11 @@
 package com.danielnimafa.android.appongkir.presenter.interactor
 
+import com.danielnimafa.android.appongkir.model.content.Userdata
+import com.danielnimafa.android.appongkir.utils.Const
+import com.danielnimafa.android.appongkir.utils.Sout
 import io.reactivex.disposables.CompositeDisposable
 import io.realm.Realm
-import okhttp3.ResponseBody
+import rx.Observable
 
 /*
 * this class is layer for interacting with data source
@@ -11,7 +14,7 @@ import okhttp3.ResponseBody
 class LoginInteractor {
 
     interface OnFinishedLoginListener {
-        fun onSuccessLogin(it: ResponseBody?)
+        fun onSuccessLogin(s: String)
         fun onFailedLogin(it: String?)
         fun onErrorLogin(it: Throwable)
     }
@@ -29,10 +32,22 @@ class LoginInteractor {
         realm.close()
     }
 
-    fun submittingLogin(deviceID: String, username: String, password: String, listener: OnFinishedLoginListener) {
-        /*subs.add(ClientRequest.loginRequest("deviceId", "username", "password",
-                success = { listener.onSuccessLogin(it) },
-                fail = { listener.onFailedLogin(it) },
-                error = { listener.onErrorLogin(it) }))*/
+    fun submittingLogin(username: String, password: String, listener: OnFinishedLoginListener) {
+        Observable.just(realm).subscribe(
+                {
+                    realm.executeTransaction { r ->
+                        r.createObject(Userdata::class.java).also {
+                            it.username = username
+                            it.name = "Anonymous"
+                            it.avatar = "avatar"
+                            it.token = Const.api_key
+                        }
+                    }
+                },
+                { Sout.trace(it as Exception); listener.onErrorLogin(it) },
+                {
+                    val name = realm.where(Userdata::class.java).findFirst()?.username
+                    listener.onSuccessLogin(name ?: "user")
+                })
     }
 }

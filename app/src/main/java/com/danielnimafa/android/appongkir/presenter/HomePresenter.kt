@@ -18,7 +18,8 @@ import com.danielnimafa.android.appongkir.model.response.Province.Rajaongkir as 
 class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>(),
         HomeInteractor.ProvinceDataListener,
         HomeInteractor.CitiesDataListener,
-        HomeInteractor.OnFinishedCheckTerifListener {
+        HomeInteractor.OnFinishedCheckTerifListener,
+        HomeInteractor.UserListener {
 
     companion object {
         val JNE = "jne"
@@ -87,6 +88,10 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
     fun assignWeightValue(value: String) {
         weightValue = if (value.isNotEmpty()) value.toInt() else 0
         Sout.log("weight", value)
+    }
+
+    override fun onSuccessLogout() {
+        view?.gotoLogin()
     }
 
     override fun onSuccessProvince(rajaongkir: provinceData?) {
@@ -179,5 +184,9 @@ class HomePresenter(val interactor: HomeInteractor) : MvpBasePresenter<HomeView>
         weightValue = 0
         courierValue = JNE
         view?.run { resetInputValue() }
+    }
+
+    fun performLogout() {
+        interactor.loggingOutUser(this)
     }
 }

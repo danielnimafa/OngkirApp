@@ -48,6 +48,8 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
             title = stringGet(R.string.str_login)
         }
 
+        loginBtn.isEnabled = false
+
         bt_visible.click { showPassword(true) }
         bt_invisible.click { showPassword(false) }
 
@@ -67,6 +69,10 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
         }
     }
 
+    override fun gotoHome() {
+        startActivity(HomeActivity[this]); finish()
+    }
+
     override fun showMessage(message: String, title: String?, type: Int) {
         when (type) {
             11 -> {
@@ -79,14 +85,12 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
     }
 
     override fun showProgress() {
-        pgs.visibility = View.VISIBLE
         edUname.isEnabled = false
         edPassword.isEnabled = false
         loginBtn.isEnabled = false
     }
 
     override fun hideProgress() {
-        pgs.visibility = View.GONE
         edUname.isEnabled = true
         edPassword.isEnabled = true
         checkInputValue()
