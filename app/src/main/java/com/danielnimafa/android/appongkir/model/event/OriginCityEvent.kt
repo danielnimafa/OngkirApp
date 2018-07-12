@@ -1,4 +1,6 @@
 package com.danielnimafa.android.appongkir.model.event
 
-class CityEvent {
+class OriginCityEvent {
+    var cityId: String = ""
+    var cityName: String = ""
 }
