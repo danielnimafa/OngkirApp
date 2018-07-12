@@ -10,6 +10,7 @@ import com.danielnimafa.android.appongkir.model.event.OriginCityEvent
 import com.danielnimafa.android.appongkir.presenter.CitiesPresenter
 import com.danielnimafa.android.appongkir.presenter.interactor.CitiesInteractor
 import com.danielnimafa.android.appongkir.utils.Sout
+import com.danielnimafa.android.appongkir.utils.extension.postDelayed
 import com.danielnimafa.android.appongkir.utils.extension.stringGet
 import com.danielnimafa.android.appongkir.view.base.BaseListFragment
 import com.danielnimafa.android.appongkir.view.iface.DataListView
@@ -58,24 +59,27 @@ class CitiesFragment : BaseListFragment<DataListView, CitiesPresenter>(), DataLi
     }
 
     private fun onitemTap(it: CityContentModel) {
-        val cityType = listener?.grabCityType()
-        var event: Any
-        cityType?.also { s ->
-            if (s == "origin") {
-                event = OriginCityEvent().apply {
-                    cityId = it.city_id ?: "null"
-                    cityName = "${it.type} ${it.city_name}"
-                }
-            } else {
-                event = DestinationCityEvent().apply {
-                    cityId = it.city_id ?: "null"
-                    cityName = "${it.type} ${it.city_name}"
+        activity?.run {
+            postDelayed(200) {
+                val cityType = listener?.grabCityType()
+                var event: Any
+                cityType?.also { s ->
+                    if (s == "origin") {
+                        event = OriginCityEvent().apply {
+                            cityId = it.city_id ?: "null"
+                            cityName = "${it.type} ${it.city_name}"
+                        }
+                    } else {
+                        event = DestinationCityEvent().apply {
+                            cityId = it.city_id ?: "null"
+                            cityName = "${it.type} ${it.city_name}"
+                        }
+                    }
+                    RxBus.get().post(event)
+                    listener?.closeActivity()
                 }
             }
-            RxBus.get().post(event)
-            listener?.closeActivity()
         }
-
     }
 
     private fun setupTitleScreen() {

@@ -17,6 +17,14 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
+    <style name="MyToolbarStyle" parent="Theme.AppCompat.Light">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="android:textColorPrimaryInverse">#fff</item>
+        <item name="android:textColorSecondary">#fff</item>
+        <item name="actionMenuTextColor">#fff</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
     <!-- text style -->
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">21sp</item>
