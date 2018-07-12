@@ -16,4 +16,7 @@
     <string name="str_cek_tarif">Cek Tarif</string>
     <string name="str_reload">Muat Ulang</string>
     <string name="message_failed_fetching">Gagal memuat data. Silakan mencoba kembali</string>
+    <string name="str_gram">gram</string>
+    <string name="message_fill_input_data">Lengkapi data terlebih dahulu</string>
+    <string name="str_wait">Silakan tunggu</string>
 </resources>

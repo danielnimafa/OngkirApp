@@ -11,13 +11,16 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import com.danielnimafa.android.appongkir.model.response.Cities.Rajaongkir as citiesData
 import com.danielnimafa.android.appongkir.model.response.Cities.Result as cities
+import com.danielnimafa.android.appongkir.model.response.Cost.Rajaongkir as costData
 import com.danielnimafa.android.appongkir.model.response.Province.Rajaongkir as provinceData
 import com.danielnimafa.android.appongkir.model.response.Province.Result as provincies
 
 class HomeInteractor {
 
     interface OnFinishedCheckTerifListener {
-
+        fun onSuccessCost(rajaongkir: costData?)
+        fun onFailCost(string: String?)
+        fun onErrorCost(e: Exception)
     }
 
     interface ProvinceDataListener {
@@ -102,5 +105,19 @@ class HomeInteractor {
             where(ProvinceContent::class.java).findAll().apply { deleteAll() }
             where(CityContent::class.java).findAll().apply { deleteAll() }
         }
+    }
+
+    fun submitTarifData(courier: String, originID: String, destinationID: String, weightValue: Int, l: OnFinishedCheckTerifListener) {
+        subs.add(ServiceGenerator.createService(Const.api_key)
+                .costData(originID, destinationID, weightValue, courier)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it.isSuccessful) l.onSuccessCost(it.body()?.rajaongkir)
+                    else l.onFailCost(it.errorBody()?.string())
+                }, {
+                    Sout.trace(it as Exception)
+                    l.onErrorCost(it)
+                }))
     }
 }

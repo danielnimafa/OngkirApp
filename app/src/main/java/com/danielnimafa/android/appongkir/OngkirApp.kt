@@ -10,10 +10,10 @@ import com.pixplicity.easyprefs.library.Prefs
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
-class AppOngkir : MultiDexApplication() {
+class OngkirApp : MultiDexApplication() {
 
     companion object {
-        var instance: AppOngkir by DelegatesExt.notNullSingleValue()
+        var INSTANCE: OngkirApp by DelegatesExt.notNullSingleValue()
     }
 
     override fun attachBaseContext(base: Context) {
@@ -23,11 +23,11 @@ class AppOngkir : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        INSTANCE = this
 
         Realm.init(this)
         val config = RealmConfiguration.Builder()
-                .name("androidkotlin.realm")
+                .name("ongkirapp.realm")
                 .schemaVersion(0)
                 .migration(DBMigration())
                 .deleteRealmIfMigrationNeeded()
@@ -35,7 +35,7 @@ class AppOngkir : MultiDexApplication() {
         Realm.setDefaultConfiguration(config)
 
         Prefs.Builder()
-                .setContext(instance)
+                .setContext(INSTANCE)
                 .setMode(ContextWrapper.MODE_PRIVATE)
                 .setPrefsName(packageName)
                 .setUseDefaultSharedPreference(true)

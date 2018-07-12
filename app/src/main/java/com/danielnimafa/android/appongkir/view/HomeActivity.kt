@@ -4,15 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioButton
 import com.danielnimafa.android.appongkir.R
+import com.danielnimafa.android.appongkir.model.event.OriginCityEvent
 import com.danielnimafa.android.appongkir.presenter.HomePresenter
 import com.danielnimafa.android.appongkir.presenter.interactor.HomeInteractor
 import com.danielnimafa.android.appongkir.utils.Sout
 import com.danielnimafa.android.appongkir.utils.extension.click
 import com.danielnimafa.android.appongkir.utils.extension.postDelayed
+import com.danielnimafa.android.appongkir.utils.extension.showAlertSingleActionMessage
 import com.danielnimafa.android.appongkir.utils.extension.stringGet
 import com.danielnimafa.android.appongkir.view.iface.HomeView
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
+import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.circle_progress_layout.*
 import kotlinx.android.synthetic.main.message_info_layout.*
@@ -34,12 +39,14 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         Sout.thisContext(this::class.java)
         setContentView(R.layout.activity_home)
         setupView()
+        RxBus.get().register(this)
         presenter.onCreate(this)
         loadSourceData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        RxBus.get().unregister(this)
         presenter.onDestroy()
     }
 
@@ -52,6 +59,19 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         backState = true
         toast("Tekan sekali lagi untuk keluar")
         postDelayed(2000) { backState = false }
+    }
+
+    override fun gotoDetailScreen(str: String) {
+        startActivity(TarifResultActivity[this].apply { putExtra("ongkir", str) })
+    }
+
+    override fun updateButtonMessage(message: String) {
+        checkBtn.text = message
+    }
+
+    override fun showPopupMessage(title: String, message: String) {
+        showAlertSingleActionMessage(this, message, title,
+                { dialogInterface, i -> dialogInterface.dismiss() })
     }
 
     override fun showTarifLayout(state: Boolean) {
@@ -70,6 +90,8 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
         showTarifLayout(false)
     }
 
+    override fun tos(message: String) = toast(message)
+
     override fun hideProgress() {
         circleProgress.visibility = View.GONE
     }
@@ -85,6 +107,45 @@ class HomeActivity : MvpActivity<HomeView, HomePresenter>(), HomeView {
             title = stringGet(R.string.app_name)
         }
 
+        showTarifLayout(false)
+
+        originLayout.click { }
+        destinationaLayout.click { }
+        originClearBtn.click { edOrigin.setText(""); presenter.assignOriginCity("") }
+        destinationClearBtn.click { edDestination.setText(""); presenter.assignDestinationCity("") }
         reloadBtn.click { loadSourceData() }
+        checkBtn.click { presenter.validateInput() }
+        radio_jne.click { selectCourier(it) }
+        radio_tiki.click { selectCourier(it) }
+        radio_pos.click { selectCourier(it) }
     }
+
+    private fun selectCourier(it: View) {
+
+        val checked = (it as RadioButton).isChecked
+        when (it.id) {
+            R.id.radio_jne -> {
+                if (checked) presenter.assignCourerValue(HomePresenter.JNE)
+            }
+            R.id.radio_tiki -> {
+                if (checked) presenter.assignCourerValue(HomePresenter.TIKI)
+            }
+            R.id.radio_pos -> {
+                if (checked) presenter.assignCourerValue(HomePresenter.POS)
+            }
+        }
+    }
+
+    @Subscribe
+    fun selectedOriginCity(t: OriginCityEvent) {
+        Sout.log("selected City", "${t.cityName}, ${t.cityId}")
+        presenter.assignOriginCity(t.cityId)
+    }
+
+    @Subscribe
+    fun selectedDestinationCity(t: OriginCityEvent) {
+        Sout.log("selected City", "${t.cityName}, ${t.cityId}")
+        presenter.assignDestinationCity(t.cityId)
+    }
+
 }
