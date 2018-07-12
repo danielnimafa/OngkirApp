@@ -15,4 +15,5 @@
     <string name="kota_tujuan">Kota Tujuan</string>
     <string name="str_cek_tarif">Cek Tarif</string>
     <string name="str_reload">Muat Ulang</string>
+    <string name="message_failed_fetching">Gagal memuat data. Silakan mencoba kembali</string>
 </resources>

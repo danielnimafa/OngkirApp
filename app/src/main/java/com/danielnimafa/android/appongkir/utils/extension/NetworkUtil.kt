@@ -26,7 +26,7 @@ fun Activity.checkOnlineStatus(): Boolean {
 
 fun Activity.getNetworkingError(e: Throwable): String {
 
-    var msgError: String? = null
+    val msgError: String
     if (e is SocketTimeoutException) {
         msgError = stringGet(R.string.timeout_msg)
     } else if (e is SocketException || e is UnknownHostException) {
@@ -34,10 +34,10 @@ fun Activity.getNetworkingError(e: Throwable): String {
     } else if (e is NullPointerException) {
         msgError = stringGet(R.string.invalid_response)
     } else {
-        msgError = e.message
+        msgError = e.message ?: "null"
     }
 
-    return msgError!!
+    return msgError
 }
 
 fun populateErrorMessages(errors: List<String>?): String {
