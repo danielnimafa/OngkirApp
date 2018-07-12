@@ -30,4 +30,8 @@ class CitiesPresenter(val interactor: CitiesInteractor) : MvpBasePresenter<DataL
         }
         view?.showList(arrData)
     }
+
+    fun queryData(query: String, provinceID: String) {
+        interactor.queryCitiesData(provinceID, query, this)
+    }
 }

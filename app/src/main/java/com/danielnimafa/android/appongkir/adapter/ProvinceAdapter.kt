@@ -10,15 +10,21 @@ import com.danielnimafa.android.appongkir.model.content.ProvinceContentModel
 import com.danielnimafa.android.appongkir.utils.extension.click
 import com.danielnimafa.android.appongkir.utils.extension.ctx
 
-class ProvinceAdapter(val datasrc: ArrayList<ProvinceContentModel>,
+class ProvinceAdapter(var datasrc: ArrayList<ProvinceContentModel>,
                       val itemTap: (ProvinceContentModel) -> Unit) : RecyclerView.Adapter<ProvinceAdapter.ItemHolder>() {
+
+    var datasrcFiltered: ArrayList<ProvinceContentModel>
+
+    init {
+        datasrcFiltered = datasrc
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val view = LayoutInflater.from(parent.ctx).inflate(R.layout.row_province_layout, parent, false)
         return ItemHolder(view)
     }
 
-    override fun getItemCount(): Int = datasrc.size
+    override fun getItemCount(): Int = datasrcFiltered.size
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.run {

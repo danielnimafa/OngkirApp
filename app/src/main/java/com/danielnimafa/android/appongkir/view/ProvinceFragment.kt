@@ -8,6 +8,8 @@ import com.danielnimafa.android.appongkir.model.content.ProvinceContentModel
 import com.danielnimafa.android.appongkir.presenter.ProvincePresenter
 import com.danielnimafa.android.appongkir.presenter.interactor.ProvinceInteractor
 import com.danielnimafa.android.appongkir.utils.Sout
+import com.danielnimafa.android.appongkir.utils.extension.afterTextChanged
+import com.danielnimafa.android.appongkir.utils.extension.onTextChanged
 import com.danielnimafa.android.appongkir.utils.extension.postDelayed
 import com.danielnimafa.android.appongkir.utils.extension.stringGet
 import com.danielnimafa.android.appongkir.view.base.BaseListFragment
@@ -34,6 +36,7 @@ class ProvinceFragment : BaseListFragment<DataListView, ProvincePresenter>() {
         Sout.thisContext(this::class.java)
         activity?.run { listener = this as RegionScreenListener }
         setupTitleScreen()
+        edSearch.afterTextChanged { postDelayed(300) { presenter.queryData(it) } }
         presenter.onCreate()
     }
 

@@ -10,6 +10,7 @@ import com.danielnimafa.android.appongkir.model.event.OriginCityEvent
 import com.danielnimafa.android.appongkir.presenter.CitiesPresenter
 import com.danielnimafa.android.appongkir.presenter.interactor.CitiesInteractor
 import com.danielnimafa.android.appongkir.utils.Sout
+import com.danielnimafa.android.appongkir.utils.extension.afterTextChanged
 import com.danielnimafa.android.appongkir.utils.extension.postDelayed
 import com.danielnimafa.android.appongkir.utils.extension.stringGet
 import com.danielnimafa.android.appongkir.view.base.BaseListFragment
@@ -45,6 +46,7 @@ class CitiesFragment : BaseListFragment<DataListView, CitiesPresenter>(), DataLi
             provinceID = getString("id")
             province = getString("name")
             setupTitleScreen()
+            edSearch.afterTextChanged { postDelayed(300) { presenter.queryData(it, provinceID) } }
         }
         presenter.onCreate(provinceID)
     }
