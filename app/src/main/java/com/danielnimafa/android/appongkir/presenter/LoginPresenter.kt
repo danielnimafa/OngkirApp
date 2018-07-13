@@ -21,15 +21,14 @@ class LoginPresenter(private val interactor: LoginInteractor) : MvpBasePresenter
         interactor.clearInteractor()
     }
 
-    fun postLoginSubmit() {
+    fun postLoginSubmit(strUname: String) {
         view?.showProgress()
         postDelayed(1000) {
-            interactor.submittingLogin("username", "password", this)
+            interactor.submittingLogin(strUname, "password", this)
         }
     }
 
     override fun onSuccessLogin(name: String) {
-        // do on success scenario
         view?.run {
             hideProgress()
             showMessage("Selamat datang, ${name}", "", 22)

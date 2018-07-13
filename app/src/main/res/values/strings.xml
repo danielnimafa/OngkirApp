@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ongkir App</string>
+    <string name="app_name">King Cost</string>
     <string name="str_username">Username</string>
     <string name="str_password">Password</string>
     <string name="str_login">Login</string>
@@ -30,4 +30,5 @@
     <string name="str_info">Info</string>
     <string name="str_cancel">Batal</string>
     <string name="str_ok">Oke</string>
+    <string name="desc_app">Cek ongkir melalui sentuhan jari</string>
 </resources>

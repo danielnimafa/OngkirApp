@@ -2,7 +2,7 @@ package com.danielnimafa.android.appongkir.presenter.interactor
 
 import com.danielnimafa.android.appongkir.model.content.CityContent
 import com.danielnimafa.android.appongkir.model.content.ProvinceContent
-import com.danielnimafa.android.appongkir.model.content.Userdata
+import com.danielnimafa.android.appongkir.model.content.ProfilPengguna
 import com.danielnimafa.android.appongkir.utils.Const
 import com.danielnimafa.android.appongkir.utils.Sout
 import com.danielnimafa.android.appongkir.utils.extension.createRequestBody
@@ -11,7 +11,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import rx.Observable
 import com.danielnimafa.android.appongkir.model.response.Cities.Rajaongkir as citiesData
 import com.danielnimafa.android.appongkir.model.response.Cities.Result as cities
 import com.danielnimafa.android.appongkir.model.response.Cost.Rajaongkir as costData
@@ -110,8 +109,8 @@ class HomeInteractor {
     fun clearExistingSourceData() {
         realm.executeTransaction {
             it.run {
-                where(ProvinceContent::class.java).findAll().apply { deleteAll() }
-                where(CityContent::class.java).findAll().apply { deleteAll() }
+                where(ProvinceContent::class.java).findAll().apply { deleteAllFromRealm() }
+                where(CityContent::class.java).findAll().apply { deleteAllFromRealm() }
             }
         }
     }
@@ -138,7 +137,7 @@ class HomeInteractor {
 
     fun loggingOutUser(l: UserListener) {
         realm.executeTransaction { r ->
-            r.where(Userdata::class.java).findAll().apply { deleteAllFromRealm() }
+            r.where(ProfilPengguna::class.java).findAll().apply { deleteAllFromRealm() }
         }
         l.onSuccessLogout()
     }

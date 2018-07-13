@@ -1,11 +1,10 @@
 package com.danielnimafa.android.appongkir.presenter.interactor
 
-import com.danielnimafa.android.appongkir.model.content.Userdata
+import com.danielnimafa.android.appongkir.model.content.ProfilPengguna
 import com.danielnimafa.android.appongkir.utils.Const
 import com.danielnimafa.android.appongkir.utils.Sout
 import io.reactivex.disposables.CompositeDisposable
 import io.realm.Realm
-import rx.Observable
 
 /*
 * this class is layer for interacting with data source
@@ -32,22 +31,20 @@ class LoginInteractor {
         realm.close()
     }
 
-    fun submittingLogin(username: String, password: String, listener: OnFinishedLoginListener) {
-        Observable.just(realm).subscribe(
-                {
-                    realm.executeTransaction { r ->
-                        r.createObject(Userdata::class.java).also {
-                            it.username = username
-                            it.name = "Anonymous"
-                            it.avatar = "avatar"
-                            it.token = Const.api_key
-                        }
-                    }
-                },
-                { Sout.trace(it as Exception); listener.onErrorLogin(it) },
-                {
-                    val name = realm.where(Userdata::class.java).findFirst()?.username
-                    listener.onSuccessLogin(name ?: "user")
-                })
+    fun submittingLogin(uname: String, password: String, listener: OnFinishedLoginListener) {
+        Sout.log("login", "executed")
+        realm.executeTransactionAsync({ r ->
+            r.createObject(ProfilPengguna::class.java).apply {
+                username = uname
+                name = "Anonymous"
+                avatar = "avatar"
+                token = Const.api_key
+            }
+        }, {
+            Sout.log("login", "success")
+            realm.where(ProfilPengguna::class.java).findFirst()?.also {
+                listener.onSuccessLogin(it.username ?: "username")
+            }
+        }, { Sout.trace(it as Exception); listener.onErrorLogin(it) })
     }
 }

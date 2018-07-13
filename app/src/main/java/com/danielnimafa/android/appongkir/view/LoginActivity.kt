@@ -37,8 +37,8 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
     }
 
     override fun onDestroy() {
-        presenter.onDestroy()
         super.onDestroy()
+        presenter.onDestroy()
     }
 
     private fun setupView() {
@@ -65,7 +65,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
 
         loginBtn.click {
             hideSoftKeyboard()
-            postDelayed(120) { presenter.postLoginSubmit() }
+            postDelayed(120) { presenter.postLoginSubmit(strUname) }
         }
     }
 
